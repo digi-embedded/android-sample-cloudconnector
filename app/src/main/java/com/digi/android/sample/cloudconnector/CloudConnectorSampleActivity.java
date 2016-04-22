@@ -267,8 +267,10 @@ public class CloudConnectorSampleActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        connectSwitch.setOnCheckedChangeListener(null);
                         connectSwitch.setEnabled(true);
                         connectSwitch.setChecked(true);
+                        connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
                         statusText.setText(getResources().getString(R.string.status_connected));
                         statusText.setTextColor(getResources().getColor(R.color.green));
                         datapointsButton.setEnabled(true);
@@ -281,8 +283,10 @@ public class CloudConnectorSampleActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        connectSwitch.setOnCheckedChangeListener(null);
                         connectSwitch.setEnabled(true);
                         connectSwitch.setChecked(false);
+                        connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
                         statusText.setText(getResources().getString(R.string.status_disconnected));
                         statusText.setTextColor(getResources().getColor(R.color.red));
                         datapointsButton.setEnabled(false);
@@ -295,8 +299,10 @@ public class CloudConnectorSampleActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        connectSwitch.setOnCheckedChangeListener(null);
                         connectSwitch.setEnabled(true);
                         connectSwitch.setChecked(false);
+                        connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
                         statusText.setText(getResources().getString(R.string.status_disconnected));
                         statusText.setTextColor(getResources().getColor(R.color.red));
                         datapointsButton.setEnabled(false);
