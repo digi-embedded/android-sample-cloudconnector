@@ -38,6 +38,8 @@ public class CloudConnectorSampleActivity extends Activity {
     private final static String DEVICE_REQUEST_TAG = "cloud_connector_sample";
 
     private final static String DATAPOINTS_SEND_SUCCESS = "Datapoints successfully sent";
+    private final static String MESSAGE_SETTINGS_READ = "Settings have been read";
+    private final static String MESSAGE_SETTINGS_SAVED = "Settings saved";
 
     private final static boolean SHOW_RECONNECT = false;
 
@@ -225,6 +227,7 @@ public class CloudConnectorSampleActivity extends Activity {
      */
     private void handleRefreshPressed() {
         updateInterface();
+        Toast.makeText(this, MESSAGE_SETTINGS_READ, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -243,6 +246,7 @@ public class CloudConnectorSampleActivity extends Activity {
                 preferencesManager.setReconnectTime(Integer.parseInt(reconnectTimeText.getText().toString()));
             preferencesManager.setSecureConnectionEnabled(secureConnectionCheckbox.isChecked());
             preferencesManager.setCompressionEnabled(compressCheckbox.isChecked());
+            Toast.makeText(this, MESSAGE_SETTINGS_SAVED, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Error writing setting: " + e.getMessage(), Toast.LENGTH_LONG).show();
