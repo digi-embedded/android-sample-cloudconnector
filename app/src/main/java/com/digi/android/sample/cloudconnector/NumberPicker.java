@@ -32,7 +32,9 @@ package com.digi.android.sample.cloudconnector;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -41,6 +43,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * A simple layout group that provides a numeric text area with two buttons to
@@ -97,6 +100,7 @@ public class NumberPicker extends LinearLayout {
 
         this.setLayoutParams( new LinearLayout.LayoutParams( LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT ) );
         LayoutParams elementParams = new LinearLayout.LayoutParams( ELEMENT_HEIGHT, ELEMENT_WIDTH );
+        LayoutParams elementParamsValueText = new LinearLayout.LayoutParams( (int) (ELEMENT_WIDTH * 2), ELEMENT_HEIGHT );
 
         // init the individual elements
         initDecrementButton( context );
@@ -107,11 +111,11 @@ public class NumberPicker extends LinearLayout {
         // Thanks for the help, LinearLayout!
         if( getOrientation() == VERTICAL ){
             addView( increment, elementParams );
-            addView( valueText, elementParams );
+            addView( valueText, elementParamsValueText );
             addView( decrement, elementParams );
         } else {
             addView( decrement, elementParams );
-            addView( valueText, elementParams );
+            addView( valueText, elementParamsValueText );
             addView( increment, elementParams );
         }
     }
@@ -178,6 +182,28 @@ public class NumberPicker extends LinearLayout {
             }
         });
 
+        valueText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    value = Integer.parseInt(s.toString());
+                } catch (Exception e) {
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    value = Integer.parseInt(s.toString());
+                } catch (Exception e) { }
+            }
+        });
+
         // Highlight the number when we get focus
         valueText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
@@ -189,6 +215,10 @@ public class NumberPicker extends LinearLayout {
         valueText.setGravity( Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL );
         valueText.setText( value.toString() );
         valueText.setInputType( InputType.TYPE_CLASS_NUMBER );
+    }
+
+    public EditText getValueEditText() {
+        return valueText;
     }
 
     private void initDecrementButton( Context context){

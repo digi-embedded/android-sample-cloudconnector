@@ -143,6 +143,22 @@ public class DataPointDialog {
         dataPointsNumberLabelText = (TextView)dataPointDialogView.findViewById(R.id.data_points_number_label);
         numberDataPoints = (NumberPicker)dataPointDialogView.findViewById(R.id.data_points_number);
         numberDataPoints.setValue(1);
+        numberDataPoints.getValueEditText().addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                validateDialog();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                validateDialog();
+            }
+        });
     }
 
     /**
@@ -220,6 +236,13 @@ public class DataPointDialog {
             } catch (Exception e) {
                 errorMessage = "Value is not valid for the specified type.";
             }
+        }
+
+        if (errorMessage == null) {
+            if (numberDataPoints.getValue() < 1)
+                errorMessage = "At least one data point must be sent to Device Cloud.";
+            else if (numberDataPoints.getValue() > connectorManager.MAXIMUM_DATA_POINTS)
+                errorMessage = "Only " + connectorManager.MAXIMUM_DATA_POINTS + " data points can be sent at once.";
         }
 
         if (errorMessage != null) {
