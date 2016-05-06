@@ -238,7 +238,7 @@ public class CloudConnectorSampleActivity extends Activity {
             preferencesManager.setDeviceName(deviceNameText.getText().toString());
             preferencesManager.setDeviceDescription(deviceDescriptionText.getText().toString());
             preferencesManager.setDeviceContactInformation(contactText.getText().toString());
-            preferencesManager.setVendorID(vendorIDText.getText().toString());
+            preferencesManager.setVendorID(vendorIDText.getText().toString().toUpperCase().replace("X", "x"));
             preferencesManager.setURL(urlText.getText().toString());
             preferencesManager.setAutoConnectEnabled(autoStartCheckbox.isChecked());
             preferencesManager.setReconnectEnabled(reconnectCheckbox.isChecked());
