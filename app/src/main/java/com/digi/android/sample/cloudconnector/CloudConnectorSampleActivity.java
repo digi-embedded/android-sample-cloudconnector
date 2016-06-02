@@ -65,6 +65,7 @@ public class CloudConnectorSampleActivity extends Activity {
     private CheckBox reconnectCheckbox;
     private CheckBox secureConnectionCheckbox;
     private CheckBox compressCheckbox;
+    private CheckBox systemMonitorCheckbox;
 
     private Button saveButton;
     private Button refreshButton;
@@ -137,6 +138,7 @@ public class CloudConnectorSampleActivity extends Activity {
         });
         secureConnectionCheckbox = (CheckBox)findViewById(R.id.secure_connection);
         compressCheckbox = (CheckBox)findViewById(R.id.compression);
+        systemMonitorCheckbox = (CheckBox)findViewById(R.id.system_monitor);
 
         saveButton = (Button)findViewById(R.id.save);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +191,7 @@ public class CloudConnectorSampleActivity extends Activity {
         deviceNameText.setText(preferencesManager.getDeviceName());
         deviceDescriptionText.setText(preferencesManager.getDeviceDescription());
         contactText.setText(preferencesManager.getDeviceContactInformation());
-        vendorIDText.setText(preferencesManager.getVendorID());
+        vendorIDText.setText(preferencesManager.getVendorID().replace("X", "x"));
         urlText.setText(preferencesManager.getURL());
         reconnectTimeText.setText("" + preferencesManager.getReconnectTime());
         autoStartCheckbox.setChecked(preferencesManager.isAutoConnectEnabled());
@@ -202,6 +204,7 @@ public class CloudConnectorSampleActivity extends Activity {
             reconnectTimeLabel.setTextColor(getResources().getColor(R.color.light_gray));
         secureConnectionCheckbox.setChecked(preferencesManager.isSecureConnectionEnabled());
         compressCheckbox.setChecked(preferencesManager.isCompressionEnabled());
+        systemMonitorCheckbox.setChecked(connectorManager.isSystemMonitorEnabled());
     }
 
     /**
@@ -246,6 +249,7 @@ public class CloudConnectorSampleActivity extends Activity {
                 preferencesManager.setReconnectTime(Integer.parseInt(reconnectTimeText.getText().toString()));
             preferencesManager.setSecureConnectionEnabled(secureConnectionCheckbox.isChecked());
             preferencesManager.setCompressionEnabled(compressCheckbox.isChecked());
+            preferencesManager.enableSystemMonitor(systemMonitorCheckbox.isChecked());
             Toast.makeText(this, MESSAGE_SETTINGS_SAVED, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             e.printStackTrace();

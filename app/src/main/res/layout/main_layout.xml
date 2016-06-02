@@ -288,13 +288,22 @@
         android:layout_marginLeft="3dip"
         android:textAppearance="@style/standard"/>
 
+    <CheckBox
+        android:id="@+id/system_monitor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enable_system_monitor"
+        android:layout_below="@id/compression"
+        android:layout_marginLeft="3dip"
+        android:textAppearance="@style/standard"/>
+
     <Button
         android:id="@+id/datapoints"
         android:layout_width="180dip"
         android:layout_height="wrap_content"
         android:text="@string/datapoints"
         android:layout_marginTop="10dip"
-        android:layout_below="@id/compression"
+        android:layout_below="@id/system_monitor"
         android:layout_alignParentLeft="true"
         style="@style/button"/>
 
@@ -304,7 +313,7 @@
         android:layout_height="wrap_content"
         android:text="@string/refresh"
         android:layout_marginTop="10dip"
-        android:layout_below="@id/compression"
+        android:layout_below="@id/system_monitor"
         android:layout_toLeftOf="@+id/save"
         style="@style/button"/>
 
@@ -315,7 +324,7 @@
         android:text="@string/save"
         android:layout_marginTop="10dip"
         android:layout_marginLeft="10dip"
-        android:layout_below="@id/compression"
+        android:layout_below="@id/system_monitor"
         android:layout_alignParentRight="true"
         style="@style/button"/>
 </RelativeLayout>

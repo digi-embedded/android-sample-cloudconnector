@@ -33,6 +33,7 @@
     <string name="default_data_point_value">1234</string>
     <string name="number_of_data_points">Number of data points to send: </string>
     <string name="title_cloud_connector">Cloud Connector Sample Application</string>
+    <string name="enable_system_monitor">Enable system monitor</string>
     <array name="data_point_types">
         <item>INTEGER</item>
         <item>LONG</item>
