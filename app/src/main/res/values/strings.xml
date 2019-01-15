@@ -27,7 +27,7 @@
     <string name="button_close">Close</string>
     <string name="button_send">Send</string>
     <string name="title_data_point">Send Data Point</string>
-    <string name="description_data_point">Configure the data points to be sent to Device Cloud</string>
+    <string name="description_data_point">Configure the data points to be sent to Remote Manager</string>
     <string name="data_point_type">Data point type: </string>
     <string name="data_point_value">Data point value: </string>
     <string name="default_data_point_value">1234</string>

@@ -240,7 +240,7 @@ public class DataPointDialog {
 
         if (errorMessage == null) {
             if (numberDataPoints.getValue() < 1)
-                errorMessage = "At least one data point must be sent to Device Cloud.";
+                errorMessage = "At least one data point must be sent to Remote Manager.";
             else if (numberDataPoints.getValue() > connectorManager.MAXIMUM_DATA_POINTS)
                 errorMessage = "Only " + connectorManager.MAXIMUM_DATA_POINTS + " data points can be sent at once.";
         }
@@ -259,7 +259,7 @@ public class DataPointDialog {
     }
 
     /**
-     * Sends the selected data point to Device Cloud.
+     * Sends the selected data point to Remote Manager.
      */
     private void sendDataPoint() {
         DataStream dataStream;

@@ -3,8 +3,8 @@ Cloud Connector Sample Application
 
 This example demonstrates the usage of the Cloud Connector API. Users can manage
 the connection status of the service as well as configure several of its 
-parameters. It is also possible to receive device requests from Device Cloud and
-upload any type of data point.
+parameters. It is also possible to receive device requests from Remote Manager
+and upload any type of data point.
 
 Demo requirements
 -----------------
@@ -33,10 +33,10 @@ Once application starts, configure the basic Cloud Connector service parameters
 such as device name, description, contact information and vendor ID. The rest of
 parameters are configured by default. Click save to store the new values.
 
-Device requests can be received from Device Cloud using the target name 
+Device requests can be received from Remote Manager using the target name 
 "cloud_connector_sample".
 
-Finally, you can send any type of data point to Device Cloud by clicking on 
+Finally, you can send any type of data point to Remote Manager by clicking on 
 "Data Points" button. In the new dialog configure the desired data point format 
 and number and click "Send" button.
 
