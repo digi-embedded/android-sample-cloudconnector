@@ -36,10 +36,10 @@
         android:layout_height="wrap_content"
         android:text="@string/status_disconnected"
         android:layout_below="@id/connector_switch"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="5dip"
-        android:gravity="right"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dip"
+        android:layout_marginEnd="5dip"
+        android:gravity="end"
         android:textColor="@color/red"
         android:textAppearance="@style/standard"/>
 
@@ -70,7 +70,7 @@
         android:text="@string/device_id"
         android:layout_below="@id/separator_1"
         android:layout_marginTop="5dip"
-        android:layout_marginLeft="10dip"
+        android:layout_marginStart="10dip"
         android:textAppearance="@style/standard"/>
 
     <TextView
@@ -79,12 +79,12 @@
         android:layout_height="wrap_content"
         android:text="@string/unknown"
         android:layout_below="@id/separator_1"
-        android:layout_toRightOf="@+id/compression"
-        android:layout_marginLeft="10dip"
+        android:layout_toEndOf="@+id/compression"
+        android:layout_marginStart="10dip"
         android:layout_marginTop="5dip"
-        android:layout_marginRight="5dip"
-        android:layout_alignParentRight="true"
-        android:gravity="right"
+        android:layout_marginEnd="5dip"
+        android:layout_alignParentEnd="true"
+        android:gravity="end"
         android:textAppearance="@style/standard"/>
 
     <TextView
@@ -94,8 +94,9 @@
         android:text="@string/device_name"
         android:layout_below="@id/device_id_label"
         android:layout_marginTop="5dip"
-        android:layout_marginLeft="10dip"
-        android:textAppearance="@style/standard"/>
+        android:layout_marginStart="10dip"
+        android:textAppearance="@style/standard"
+        android:labelFor="@+id/device_name" />
 
     <EditText
         android:id="@+id/device_name"
@@ -103,13 +104,14 @@
         android:layout_height="wrap_content"
         android:text="@string/unknown"
         android:layout_below="@id/device_id_label"
-        android:layout_toRightOf="@+id/compression"
-        android:layout_marginLeft="10dip"
+        android:layout_toEndOf="@+id/compression"
+        android:layout_marginStart="10dip"
         android:layout_marginTop="5dip"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignBaseline="@id/device_name_label"
-        android:gravity="right"
-        android:textAppearance="@style/standard"/>
+        android:gravity="end"
+        android:textAppearance="@style/standard"
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/device_description_label"
@@ -118,8 +120,9 @@
         android:text="@string/device_description"
         android:layout_below="@id/device_name_label"
         android:layout_marginTop="5dip"
-        android:layout_marginLeft="10dip"
-        android:textAppearance="@style/standard"/>
+        android:layout_marginStart="10dip"
+        android:textAppearance="@style/standard"
+        android:labelFor="@+id/device_description" />
 
     <EditText
         android:id="@+id/device_description"
@@ -127,13 +130,14 @@
         android:layout_height="wrap_content"
         android:text="@string/unknown"
         android:layout_below="@id/device_name_label"
-        android:layout_toRightOf="@+id/compression"
-        android:layout_marginLeft="10dip"
+        android:layout_toEndOf="@+id/compression"
+        android:layout_marginStart="10dip"
         android:layout_marginTop="5dip"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignBaseline="@id/device_description_label"
-        android:gravity="right"
-        android:textAppearance="@style/standard"/>
+        android:gravity="end"
+        android:textAppearance="@style/standard"
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/contact_label"
@@ -142,8 +146,9 @@
         android:text="@string/contact"
         android:layout_below="@id/device_description_label"
         android:layout_marginTop="5dip"
-        android:layout_marginLeft="10dip"
-        android:textAppearance="@style/standard"/>
+        android:layout_marginStart="10dip"
+        android:textAppearance="@style/standard"
+        android:labelFor="@+id/contact" />
 
     <EditText
         android:id="@+id/contact"
@@ -151,13 +156,14 @@
         android:layout_height="wrap_content"
         android:text="@string/unknown"
         android:layout_below="@id/device_description_label"
-        android:layout_toRightOf="@+id/compression"
-        android:layout_marginLeft="10dip"
+        android:layout_toEndOf="@+id/compression"
+        android:layout_marginStart="10dip"
         android:layout_marginTop="5dip"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignBaseline="@id/contact_label"
-        android:gravity="right"
-        android:textAppearance="@style/standard"/>
+        android:gravity="end"
+        android:textAppearance="@style/standard"
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/vendor_id_label"
@@ -166,8 +172,9 @@
         android:text="@string/vendor_id"
         android:layout_below="@id/contact_label"
         android:layout_marginTop="5dip"
-        android:layout_marginLeft="10dip"
-        android:textAppearance="@style/standard"/>
+        android:layout_marginStart="10dip"
+        android:textAppearance="@style/standard"
+        android:labelFor="@+id/vendor_id"/>
 
     <EditText
         android:id="@+id/vendor_id"
@@ -175,13 +182,14 @@
         android:layout_height="wrap_content"
         android:text="@string/unknown"
         android:layout_below="@id/contact_label"
-        android:layout_toRightOf="@+id/compression"
-        android:layout_marginLeft="10dip"
+        android:layout_toEndOf="@+id/compression"
+        android:layout_marginStart="10dip"
         android:layout_marginTop="5dip"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignBaseline="@id/vendor_id_label"
-        android:gravity="right"
-        android:textAppearance="@style/standard"/>
+        android:gravity="end"
+        android:textAppearance="@style/standard"
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/connection_settings"
@@ -210,8 +218,9 @@
         android:text="@string/url"
         android:layout_below="@id/separator_2"
         android:layout_marginTop="5dip"
-        android:layout_marginLeft="10dip"
-        android:textAppearance="@style/standard"/>
+        android:layout_marginStart="10dip"
+        android:textAppearance="@style/standard"
+        android:labelFor="@+id/url" />
 
     <EditText
         android:id="@+id/url"
@@ -219,13 +228,14 @@
         android:layout_height="wrap_content"
         android:text="@string/unknown"
         android:layout_below="@id/separator_2"
-        android:layout_toRightOf="@+id/compression"
-        android:layout_marginLeft="10dip"
+        android:layout_toEndOf="@+id/compression"
+        android:layout_marginStart="10dip"
         android:layout_marginTop="5dip"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignBaseline="@id/url_label"
-        android:gravity="right"
-        android:textAppearance="@style/standard"/>
+        android:gravity="end"
+        android:textAppearance="@style/standard"
+        android:inputType="textUri" />
 
     <CheckBox
         android:id="@+id/auto_connect"
@@ -233,7 +243,7 @@
         android:layout_height="wrap_content"
         android:text="@string/auto_connect"
         android:layout_below="@id/url_label"
-        android:layout_marginLeft="3dip"
+        android:layout_marginStart="3dip"
         android:textAppearance="@style/standard"/>
 
     <CheckBox
@@ -242,7 +252,7 @@
         android:layout_height="wrap_content"
         android:text="@string/reconnect"
         android:layout_below="@id/auto_connect"
-        android:layout_marginLeft="3dip"
+        android:layout_marginStart="3dip"
         android:textAppearance="@style/standard"/>
 
     <TextView
@@ -251,9 +261,10 @@
         android:layout_height="wrap_content"
         android:text="@string/reconnect_time"
         android:layout_below="@id/reconnect"
-        android:layout_marginLeft="35dip"
+        android:layout_marginStart="35dip"
         android:layout_marginTop="5dip"
-        android:textAppearance="@style/standard"/>
+        android:textAppearance="@style/standard"
+        android:labelFor="@+id/reconnect_time" />
 
     <EditText
         android:id="@+id/reconnect_time"
@@ -262,13 +273,14 @@
         android:text="@string/unknown"
         android:textSize="14sp"
         android:layout_below="@id/reconnect"
-        android:layout_toRightOf="@id/reconnect_time_label"
-        android:layout_marginLeft="10dip"
+        android:layout_toEndOf="@id/reconnect_time_label"
+        android:layout_marginStart="10dip"
         android:layout_marginTop="5dip"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignBaseline="@id/reconnect_time_label"
-        android:gravity="right"
-        android:textAppearance="@style/standard"/>
+        android:gravity="end"
+        android:textAppearance="@style/standard"
+        android:inputType="numberSigned" />
 
     <CheckBox
         android:id="@+id/secure_connection"
@@ -276,7 +288,7 @@
         android:layout_height="wrap_content"
         android:text="@string/enable_secure_connection"
         android:layout_below="@id/reconnect_time_label"
-        android:layout_marginLeft="3dip"
+        android:layout_marginStart="3dip"
         android:textAppearance="@style/standard"/>
 
     <CheckBox
@@ -285,7 +297,7 @@
         android:layout_height="wrap_content"
         android:text="@string/enable_compression"
         android:layout_below="@id/secure_connection"
-        android:layout_marginLeft="3dip"
+        android:layout_marginStart="3dip"
         android:textAppearance="@style/standard"/>
 
     <CheckBox
@@ -294,7 +306,7 @@
         android:layout_height="wrap_content"
         android:text="@string/enable_system_monitor"
         android:layout_below="@id/compression"
-        android:layout_marginLeft="3dip"
+        android:layout_marginStart="3dip"
         android:textAppearance="@style/standard"/>
 
     <Button
@@ -304,7 +316,7 @@
         android:text="@string/datapoints"
         android:layout_marginTop="10dip"
         android:layout_below="@id/system_monitor"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         style="@style/button"/>
 
     <Button
@@ -314,7 +326,7 @@
         android:text="@string/refresh"
         android:layout_marginTop="10dip"
         android:layout_below="@id/system_monitor"
-        android:layout_toLeftOf="@+id/save"
+        android:layout_toStartOf="@+id/save"
         style="@style/button"/>
 
     <Button
@@ -323,8 +335,8 @@
         android:layout_height="wrap_content"
         android:text="@string/save"
         android:layout_marginTop="10dip"
-        android:layout_marginLeft="10dip"
+        android:layout_marginStart="10dip"
         android:layout_below="@id/system_monitor"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         style="@style/button"/>
 </RelativeLayout>

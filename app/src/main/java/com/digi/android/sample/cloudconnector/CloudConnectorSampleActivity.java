@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -31,6 +31,8 @@ import com.digi.android.cloudconnector.CloudConnectorManager;
 import com.digi.android.cloudconnector.CloudConnectorPreferencesManager;
 import com.digi.android.cloudconnector.ICloudConnectorEventListener;
 import com.digi.android.cloudconnector.IDeviceRequestListener;
+
+import java.util.Locale;
 
 public class CloudConnectorSampleActivity extends Activity {
 
@@ -67,8 +69,6 @@ public class CloudConnectorSampleActivity extends Activity {
     private CheckBox compressCheckbox;
     private CheckBox systemMonitorCheckbox;
 
-    private Button saveButton;
-    private Button refreshButton;
     private Button datapointsButton;
 
     private ICloudConnectorEventListener eventListener;
@@ -111,21 +111,21 @@ public class CloudConnectorSampleActivity extends Activity {
      * Initializes the user interface components.
      */
     private void initializeUIComponents() {
-        connectSwitch = (Switch)findViewById(R.id.connector_switch);
+        connectSwitch = findViewById(R.id.connector_switch);
 
-        statusText = (TextView)findViewById(R.id.connector_status);
-        deviceIDText = (TextView)findViewById(R.id.device_id);
-        reconnectTimeLabel = (TextView)findViewById(R.id.reconnect_time_label);
+        statusText = findViewById(R.id.connector_status);
+        deviceIDText = findViewById(R.id.device_id);
+        reconnectTimeLabel = findViewById(R.id.reconnect_time_label);
 
-        deviceNameText = (EditText)findViewById(R.id.device_name);
-        deviceDescriptionText = (EditText)findViewById(R.id.device_description);
-        contactText = (EditText)findViewById(R.id.contact);
-        vendorIDText = (EditText)findViewById(R.id.vendor_id);
-        urlText = (EditText)findViewById(R.id.url);
-        reconnectTimeText = (EditText)findViewById(R.id.reconnect_time);
+        deviceNameText = findViewById(R.id.device_name);
+        deviceDescriptionText = findViewById(R.id.device_description);
+        contactText = findViewById(R.id.contact);
+        vendorIDText = findViewById(R.id.vendor_id);
+        urlText = findViewById(R.id.url);
+        reconnectTimeText = findViewById(R.id.reconnect_time);
 
-        autoStartCheckbox = (CheckBox)findViewById(R.id.auto_connect);
-        reconnectCheckbox = (CheckBox)findViewById(R.id.reconnect);
+        autoStartCheckbox = findViewById(R.id.auto_connect);
+        reconnectCheckbox = findViewById(R.id.reconnect);
         reconnectCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -136,25 +136,25 @@ public class CloudConnectorSampleActivity extends Activity {
                     reconnectTimeLabel.setTextColor(getResources().getColor(R.color.light_gray));
             }
         });
-        secureConnectionCheckbox = (CheckBox)findViewById(R.id.secure_connection);
-        compressCheckbox = (CheckBox)findViewById(R.id.compression);
-        systemMonitorCheckbox = (CheckBox)findViewById(R.id.system_monitor);
+        secureConnectionCheckbox = findViewById(R.id.secure_connection);
+        compressCheckbox = findViewById(R.id.compression);
+        systemMonitorCheckbox = findViewById(R.id.system_monitor);
 
-        saveButton = (Button)findViewById(R.id.save);
+        Button saveButton = findViewById(R.id.save);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handleSavePressed();
             }
         });
-        datapointsButton = (Button)findViewById(R.id.datapoints);
+        datapointsButton = findViewById(R.id.datapoints);
         datapointsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handleDataPointsPressed();
             }
         });
-        refreshButton = (Button)findViewById(R.id.refresh);
+        Button refreshButton = findViewById(R.id.refresh);
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,7 +193,7 @@ public class CloudConnectorSampleActivity extends Activity {
         contactText.setText(preferencesManager.getDeviceContactInformation());
         vendorIDText.setText(preferencesManager.getVendorID().replace("X", "x"));
         urlText.setText(preferencesManager.getURL());
-        reconnectTimeText.setText("" + preferencesManager.getReconnectTime());
+        reconnectTimeText.setText(String.format(Locale.getDefault(), "%d", preferencesManager.getReconnectTime()));
         autoStartCheckbox.setChecked(preferencesManager.isAutoConnectEnabled());
         boolean reconnectEnabled = preferencesManager.isReconnectEnabled();
         reconnectCheckbox.setChecked(reconnectEnabled);
@@ -360,7 +360,7 @@ public class CloudConnectorSampleActivity extends Activity {
         };
     }
 
-    private CompoundButton.OnCheckedChangeListener connectCheckedListener = new CompoundButton.OnCheckedChangeListener() {
+    private final CompoundButton.OnCheckedChangeListener connectCheckedListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             handleConnectPressed(isChecked);

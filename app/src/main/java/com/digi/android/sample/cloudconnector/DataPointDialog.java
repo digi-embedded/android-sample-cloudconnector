@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2014-2016, Digi International Inc. <support@digi.com>
+/*
+ * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -36,7 +36,7 @@ import com.digi.android.cloudconnector.DataStream;
 
 import java.util.ArrayList;
 
-public class DataPointDialog {
+class DataPointDialog {
 
     // Constants.
     private final static String DATA_POINT_PREFIX = "CLOUD_CONNECTOR_TEST";
@@ -57,13 +57,13 @@ public class DataPointDialog {
     private final static int DATA_POINT_TYPE_BINARY_RAW = 6;
 
     // Variables.
-    private Context context;
+    private final Context context;
 
-    protected View dataPointDialogView;
+    private View dataPointDialogView;
 
     private AlertDialog dataPointDialog;
 
-    private CloudConnectorManager connectorManager;
+    private final CloudConnectorManager connectorManager;
 
     private TextView statusText;
     private TextView dataPointsNumberLabelText;
@@ -80,7 +80,7 @@ public class DataPointDialog {
      * @param context The Android application context.
      * @param connectorManager The Cloud Connector manager.
      */
-    public DataPointDialog(Context context, CloudConnectorManager connectorManager) {
+    DataPointDialog(Context context, CloudConnectorManager connectorManager) {
         this.context = context;
         this.connectorManager = connectorManager;
 
@@ -91,7 +91,7 @@ public class DataPointDialog {
     /**
      * Displays the data point dialog.
      */
-    public void show() {
+    void show() {
         createDialog();
 
         dataPointDialog.show();
@@ -103,7 +103,7 @@ public class DataPointDialog {
     /**
      * Configures the layout of the data point dialog.
      */
-    protected void setupLayout() {
+    private void setupLayout() {
         // Create the layout.
         LayoutInflater layoutInflater = LayoutInflater.from(context);
 
@@ -118,9 +118,9 @@ public class DataPointDialog {
      */
     private void initializeControls() {
         // Get the status text.
-        statusText = (TextView)dataPointDialogView.findViewById(R.id.status_text);
+        statusText = dataPointDialogView.findViewById(R.id.status_text);
         // Get the data points type spinner.
-        dataPointTypeSpinner = (Spinner)dataPointDialogView.findViewById(R.id.data_point_type_spinner);
+        dataPointTypeSpinner = dataPointDialogView.findViewById(R.id.data_point_type_spinner);
         dataPointTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -137,11 +137,11 @@ public class DataPointDialog {
         dataPointTypeSpinner.setSelection(0);
 
         // Get the value text.
-        valueText = (EditText)dataPointDialogView.findViewById(R.id.value_text);
+        valueText = dataPointDialogView.findViewById(R.id.value_text);
         valueText.addTextChangedListener(textWatcher);
         // Get the number picker controls.
-        dataPointsNumberLabelText = (TextView)dataPointDialogView.findViewById(R.id.data_points_number_label);
-        numberDataPoints = (NumberPicker)dataPointDialogView.findViewById(R.id.data_points_number);
+        dataPointsNumberLabelText = dataPointDialogView.findViewById(R.id.data_points_number_label);
+        numberDataPoints = dataPointDialogView.findViewById(R.id.data_points_number);
         numberDataPoints.setValue(1);
         numberDataPoints.getValueEditText().addTextChangedListener(new TextWatcher() {
             @Override
@@ -204,13 +204,13 @@ public class DataPointDialog {
     /**
      * Validates the dialog setting the corresponding configuration error.
      */
-    protected void validateDialog() {
+    private void validateDialog() {
         String errorMessage = null;
 
         String value = valueText.getText().toString();
-        if (value == null || value.trim().length() == 0)
+        if (value.trim().length() == 0) {
             errorMessage = "Value cannot be empty.";
-        else {
+        } else {
             try {
                 switch (dataPointTypeSpinner.getSelectedItemPosition()) {
                     case DATA_POINT_TYPE_INT:
@@ -241,8 +241,8 @@ public class DataPointDialog {
         if (errorMessage == null) {
             if (numberDataPoints.getValue() < 1)
                 errorMessage = "At least one data point must be sent to Remote Manager.";
-            else if (numberDataPoints.getValue() > connectorManager.MAXIMUM_DATA_POINTS)
-                errorMessage = "Only " + connectorManager.MAXIMUM_DATA_POINTS + " data points can be sent at once.";
+            else if (numberDataPoints.getValue() > CloudConnectorManager.MAXIMUM_DATA_POINTS)
+                errorMessage = "Only " + CloudConnectorManager.MAXIMUM_DATA_POINTS + " data points can be sent at once.";
         }
 
         if (errorMessage != null) {
@@ -305,7 +305,7 @@ public class DataPointDialog {
             connectorManager.sendBinaryDataPoint(binaryDataPoint);
     }
 
-    private TextWatcher textWatcher = new TextWatcher() {
+    private final TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
 
