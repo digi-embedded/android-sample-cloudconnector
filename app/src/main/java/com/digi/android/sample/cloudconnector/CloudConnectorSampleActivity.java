@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2019, Digi International Inc. <support@digi.com>
+ * Copyright (c) 2014-2021, Digi International Inc. <support@digi.com>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -36,334 +36,334 @@ import java.util.Locale;
 
 public class CloudConnectorSampleActivity extends Activity {
 
-    // Constants.
-    private final static String DEVICE_REQUEST_TAG = "cloud_connector_sample";
+	// Constants.
+	private final static String DEVICE_REQUEST_TAG = "cloud_connector_sample";
 
-    private final static String DATAPOINTS_SEND_SUCCESS = "Datapoints successfully sent";
-    private final static String MESSAGE_SETTINGS_READ = "Settings have been read";
-    private final static String MESSAGE_SETTINGS_SAVED = "Settings saved";
+	private final static String DATAPOINTS_SEND_SUCCESS = "Datapoints successfully sent";
+	private final static String MESSAGE_SETTINGS_READ = "Settings have been read";
+	private final static String MESSAGE_SETTINGS_SAVED = "Settings saved";
 
-    private final static boolean SHOW_RECONNECT = false;
+	private final static boolean SHOW_RECONNECT = false;
 
-    // Variables.
-    private CloudConnectorManager connectorManager;
+	// Variables.
+	private CloudConnectorManager connectorManager;
 
-    private CloudConnectorPreferencesManager preferencesManager;
+	private CloudConnectorPreferencesManager preferencesManager;
 
-    private Switch connectSwitch;
+	private Switch connectSwitch;
 
-    private TextView statusText;
-    private TextView deviceIDText;
-    private TextView reconnectTimeLabel;
+	private TextView statusText;
+	private TextView deviceIDText;
+	private TextView reconnectTimeLabel;
 
-    private EditText deviceNameText;
-    private EditText deviceDescriptionText;
-    private EditText contactText;
-    private EditText vendorIDText;
-    private EditText urlText;
-    private EditText reconnectTimeText;
+	private EditText deviceNameText;
+	private EditText deviceDescriptionText;
+	private EditText contactText;
+	private EditText vendorIDText;
+	private EditText urlText;
+	private EditText reconnectTimeText;
 
-    private CheckBox autoStartCheckbox;
-    private CheckBox reconnectCheckbox;
-    private CheckBox secureConnectionCheckbox;
-    private CheckBox compressCheckbox;
-    private CheckBox systemMonitorCheckbox;
+	private CheckBox autoStartCheckbox;
+	private CheckBox reconnectCheckbox;
+	private CheckBox secureConnectionCheckbox;
+	private CheckBox compressCheckbox;
+	private CheckBox systemMonitorCheckbox;
 
-    private Button datapointsButton;
+	private Button datapointsButton;
 
-    private ICloudConnectorEventListener eventListener;
+	private ICloudConnectorEventListener eventListener;
 
-    private IDeviceRequestListener deviceRequestListener;
+	private IDeviceRequestListener deviceRequestListener;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_layout);
-        // Initialize variables.
-        connectorManager = new CloudConnectorManager(this);
-        preferencesManager = connectorManager.getPreferencesManager();
-        initializeEventListener();
-        initializeDeviceRequestListener();
-        // Initialize interface.
-        initializeUIComponents();
-    }
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main_layout);
+		// Initialize variables.
+		connectorManager = new CloudConnectorManager(this);
+		preferencesManager = connectorManager.getPreferencesManager();
+		initializeEventListener();
+		initializeDeviceRequestListener();
+		// Initialize interface.
+		initializeUIComponents();
+	}
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+	@Override
+	protected void onResume() {
+		super.onResume();
 
-        connectorManager.registerEventListener(eventListener);
-        connectorManager.registerDeviceRequestListener(DEVICE_REQUEST_TAG, deviceRequestListener);
+		connectorManager.registerEventListener(eventListener);
+		connectorManager.registerDeviceRequestListener(DEVICE_REQUEST_TAG, deviceRequestListener);
 
-        updateInterface();
-        connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
-    }
+		updateInterface();
+		connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
+	}
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+	@Override
+	protected void onPause() {
+		super.onPause();
 
-        connectorManager.unregisterEventListener(eventListener);
-        connectorManager.unregisterDeviceRequestListener(deviceRequestListener);
-    }
+		connectorManager.unregisterEventListener(eventListener);
+		connectorManager.unregisterDeviceRequestListener(deviceRequestListener);
+	}
 
-    /**
-     * Initializes the user interface components.
-     */
-    private void initializeUIComponents() {
-        connectSwitch = findViewById(R.id.connector_switch);
+	/**
+	 * Initializes the user interface components.
+	 */
+	private void initializeUIComponents() {
+		connectSwitch = findViewById(R.id.connector_switch);
 
-        statusText = findViewById(R.id.connector_status);
-        deviceIDText = findViewById(R.id.device_id);
-        reconnectTimeLabel = findViewById(R.id.reconnect_time_label);
+		statusText = findViewById(R.id.connector_status);
+		deviceIDText = findViewById(R.id.device_id);
+		reconnectTimeLabel = findViewById(R.id.reconnect_time_label);
 
-        deviceNameText = findViewById(R.id.device_name);
-        deviceDescriptionText = findViewById(R.id.device_description);
-        contactText = findViewById(R.id.contact);
-        vendorIDText = findViewById(R.id.vendor_id);
-        urlText = findViewById(R.id.url);
-        reconnectTimeText = findViewById(R.id.reconnect_time);
+		deviceNameText = findViewById(R.id.device_name);
+		deviceDescriptionText = findViewById(R.id.device_description);
+		contactText = findViewById(R.id.contact);
+		vendorIDText = findViewById(R.id.vendor_id);
+		urlText = findViewById(R.id.url);
+		reconnectTimeText = findViewById(R.id.reconnect_time);
 
-        autoStartCheckbox = findViewById(R.id.auto_connect);
-        reconnectCheckbox = findViewById(R.id.reconnect);
-        reconnectCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                reconnectTimeText.setEnabled(isChecked);
-                if (isChecked)
-                    reconnectTimeLabel.setTextColor(getResources().getColor(R.color.black));
-                else
-                    reconnectTimeLabel.setTextColor(getResources().getColor(R.color.light_gray));
-            }
-        });
-        secureConnectionCheckbox = findViewById(R.id.secure_connection);
-        compressCheckbox = findViewById(R.id.compression);
-        systemMonitorCheckbox = findViewById(R.id.system_monitor);
+		autoStartCheckbox = findViewById(R.id.auto_connect);
+		reconnectCheckbox = findViewById(R.id.reconnect);
+		reconnectCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				reconnectTimeText.setEnabled(isChecked);
+				if (isChecked)
+					reconnectTimeLabel.setTextColor(getResources().getColor(R.color.black));
+				else
+					reconnectTimeLabel.setTextColor(getResources().getColor(R.color.light_gray));
+			}
+		});
+		secureConnectionCheckbox = findViewById(R.id.secure_connection);
+		compressCheckbox = findViewById(R.id.compression);
+		systemMonitorCheckbox = findViewById(R.id.system_monitor);
 
-        Button saveButton = findViewById(R.id.save);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleSavePressed();
-            }
-        });
-        datapointsButton = findViewById(R.id.datapoints);
-        datapointsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleDataPointsPressed();
-            }
-        });
-        Button refreshButton = findViewById(R.id.refresh);
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleRefreshPressed();
-            }
-        });
+		Button saveButton = findViewById(R.id.save);
+		saveButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleSavePressed();
+			}
+		});
+		datapointsButton = findViewById(R.id.datapoints);
+		datapointsButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleDataPointsPressed();
+			}
+		});
+		Button refreshButton = findViewById(R.id.refresh);
+		refreshButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				handleRefreshPressed();
+			}
+		});
 
-        if (!SHOW_RECONNECT) {
-            reconnectTimeLabel.setVisibility(View.GONE);
-            reconnectTimeText.setVisibility(View.GONE);
-            reconnectCheckbox.setVisibility(View.GONE);
-        }
-    }
+		if (!SHOW_RECONNECT) {
+			reconnectTimeLabel.setVisibility(View.GONE);
+			reconnectTimeText.setVisibility(View.GONE);
+			reconnectCheckbox.setVisibility(View.GONE);
+		}
+	}
 
-    /**
-     * Updates the user interface by reading current connector
-     * status and preferences.
-     */
-    private void updateInterface() {
-        if (connectorManager.isConnected()) {
-            connectSwitch.setEnabled(true);
-            connectSwitch.setChecked(true);
-            statusText.setText(getResources().getString(R.string.status_connected));
-            statusText.setTextColor(getResources().getColor(R.color.green));
-            datapointsButton.setEnabled(true);
-        } else {
-            connectSwitch.setEnabled(true);
-            connectSwitch.setChecked(false);
-            statusText.setText(getResources().getString(R.string.status_disconnected));
-            statusText.setTextColor(getResources().getColor(R.color.red));
-            datapointsButton.setEnabled(false);
-        }
-        deviceIDText.setText(connectorManager.getDeviceID());
-        deviceNameText.setText(preferencesManager.getDeviceName());
-        deviceDescriptionText.setText(preferencesManager.getDeviceDescription());
-        contactText.setText(preferencesManager.getDeviceContactInformation());
-        vendorIDText.setText(preferencesManager.getVendorID().replace("X", "x"));
-        urlText.setText(preferencesManager.getURL());
-        reconnectTimeText.setText(String.format(Locale.getDefault(), "%d", preferencesManager.getReconnectTime()));
-        autoStartCheckbox.setChecked(preferencesManager.isAutoConnectEnabled());
-        boolean reconnectEnabled = preferencesManager.isReconnectEnabled();
-        reconnectCheckbox.setChecked(reconnectEnabled);
-        reconnectTimeText.setEnabled(reconnectEnabled);
-        if (reconnectEnabled)
-            reconnectTimeLabel.setTextColor(getResources().getColor(R.color.black));
-        else
-            reconnectTimeLabel.setTextColor(getResources().getColor(R.color.light_gray));
-        secureConnectionCheckbox.setChecked(preferencesManager.isSecureConnectionEnabled());
-        compressCheckbox.setChecked(preferencesManager.isCompressionEnabled());
-        systemMonitorCheckbox.setChecked(connectorManager.isSystemMonitorEnabled());
-    }
+	/**
+	 * Updates the user interface by reading current connector
+	 * status and preferences.
+	 */
+	private void updateInterface() {
+		if (connectorManager.isConnected()) {
+			connectSwitch.setEnabled(true);
+			connectSwitch.setChecked(true);
+			statusText.setText(getResources().getString(R.string.status_connected));
+			statusText.setTextColor(getResources().getColor(R.color.green));
+			datapointsButton.setEnabled(true);
+		} else {
+			connectSwitch.setEnabled(true);
+			connectSwitch.setChecked(false);
+			statusText.setText(getResources().getString(R.string.status_disconnected));
+			statusText.setTextColor(getResources().getColor(R.color.red));
+			datapointsButton.setEnabled(false);
+		}
+		deviceIDText.setText(connectorManager.getDeviceID());
+		deviceNameText.setText(preferencesManager.getDeviceName());
+		deviceDescriptionText.setText(preferencesManager.getDeviceDescription());
+		contactText.setText(preferencesManager.getDeviceContactInformation());
+		vendorIDText.setText(preferencesManager.getVendorID().replace("X", "x"));
+		urlText.setText(preferencesManager.getURL());
+		reconnectTimeText.setText(String.format(Locale.getDefault(), "%d", preferencesManager.getReconnectTime()));
+		autoStartCheckbox.setChecked(preferencesManager.isAutoConnectEnabled());
+		boolean reconnectEnabled = preferencesManager.isReconnectEnabled();
+		reconnectCheckbox.setChecked(reconnectEnabled);
+		reconnectTimeText.setEnabled(reconnectEnabled);
+		if (reconnectEnabled)
+			reconnectTimeLabel.setTextColor(getResources().getColor(R.color.black));
+		else
+			reconnectTimeLabel.setTextColor(getResources().getColor(R.color.light_gray));
+		secureConnectionCheckbox.setChecked(preferencesManager.isSecureConnectionEnabled());
+		compressCheckbox.setChecked(preferencesManager.isCompressionEnabled());
+		systemMonitorCheckbox.setChecked(connectorManager.isSystemMonitorEnabled());
+	}
 
-    /**
-     * Handles what happens when the connect switch is pressed.
-     *
-     * @param connect {@code true} to connect, {@code false} otherwise.
-     */
-    private void handleConnectPressed(boolean connect) {
-        connectSwitch.setEnabled(false);
-        if (connect) {
-            statusText.setText(getResources().getString(R.string.status_connecting));
-            statusText.setTextColor(getResources().getColor(R.color.light_gray));
-            connectorManager.connect();
-        } else {
-            statusText.setText(getResources().getString(R.string.status_disconnecting));
-            statusText.setTextColor(getResources().getColor(R.color.light_gray));
-            connectorManager.disconnect();
-        }
-    }
+	/**
+	 * Handles what happens when the connect switch is pressed.
+	 *
+	 * @param connect {@code true} to connect, {@code false} otherwise.
+	 */
+	private void handleConnectPressed(boolean connect) {
+		connectSwitch.setEnabled(false);
+		if (connect) {
+			statusText.setText(getResources().getString(R.string.status_connecting));
+			statusText.setTextColor(getResources().getColor(R.color.light_gray));
+			connectorManager.connect();
+		} else {
+			statusText.setText(getResources().getString(R.string.status_disconnecting));
+			statusText.setTextColor(getResources().getColor(R.color.light_gray));
+			connectorManager.disconnect();
+		}
+	}
 
-    /**
-     * Handles what happens when the refresh button is pressed.
-     */
-    private void handleRefreshPressed() {
-        updateInterface();
-        Toast.makeText(this, MESSAGE_SETTINGS_READ, Toast.LENGTH_LONG).show();
-    }
+	/**
+	 * Handles what happens when the refresh button is pressed.
+	 */
+	private void handleRefreshPressed() {
+		updateInterface();
+		Toast.makeText(this, MESSAGE_SETTINGS_READ, Toast.LENGTH_LONG).show();
+	}
 
-    /**
-     * Handles what happens when the save button is pressed.
-     */
-    private void handleSavePressed() {
-        try {
-            preferencesManager.setDeviceName(deviceNameText.getText().toString());
-            preferencesManager.setDeviceDescription(deviceDescriptionText.getText().toString());
-            preferencesManager.setDeviceContactInformation(contactText.getText().toString());
-            preferencesManager.setVendorID(vendorIDText.getText().toString().toUpperCase().replace("X", "x"));
-            preferencesManager.setURL(urlText.getText().toString());
-            preferencesManager.setAutoConnectEnabled(autoStartCheckbox.isChecked());
-            preferencesManager.setReconnectEnabled(reconnectCheckbox.isChecked());
-            if (reconnectCheckbox.isChecked())
-                preferencesManager.setReconnectTime(Integer.parseInt(reconnectTimeText.getText().toString()));
-            preferencesManager.setSecureConnectionEnabled(secureConnectionCheckbox.isChecked());
-            preferencesManager.setCompressionEnabled(compressCheckbox.isChecked());
-            preferencesManager.enableSystemMonitor(systemMonitorCheckbox.isChecked());
-            Toast.makeText(this, MESSAGE_SETTINGS_SAVED, Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error writing setting: " + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    }
+	/**
+	 * Handles what happens when the save button is pressed.
+	 */
+	private void handleSavePressed() {
+		try {
+			preferencesManager.setDeviceName(deviceNameText.getText().toString());
+			preferencesManager.setDeviceDescription(deviceDescriptionText.getText().toString());
+			preferencesManager.setDeviceContactInformation(contactText.getText().toString());
+			preferencesManager.setVendorID(vendorIDText.getText().toString().toUpperCase().replace("X", "x"));
+			preferencesManager.setURL(urlText.getText().toString());
+			preferencesManager.setAutoConnectEnabled(autoStartCheckbox.isChecked());
+			preferencesManager.setReconnectEnabled(reconnectCheckbox.isChecked());
+			if (reconnectCheckbox.isChecked())
+				preferencesManager.setReconnectTime(Integer.parseInt(reconnectTimeText.getText().toString()));
+			preferencesManager.setSecureConnectionEnabled(secureConnectionCheckbox.isChecked());
+			preferencesManager.setCompressionEnabled(compressCheckbox.isChecked());
+			preferencesManager.enableSystemMonitor(systemMonitorCheckbox.isChecked());
+			Toast.makeText(this, MESSAGE_SETTINGS_SAVED, Toast.LENGTH_LONG).show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Toast.makeText(this, "Error writing setting: " + e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+	}
 
-    /**
-     * Handles what happens when the data points button is pressed.
-     */
-    private void handleDataPointsPressed() {
-        DataPointDialog dataPointDialog = new DataPointDialog(this, connectorManager);
-        dataPointDialog.show();
-    }
+	/**
+	 * Handles what happens when the data points button is pressed.
+	 */
+	private void handleDataPointsPressed() {
+		DataPointDialog dataPointDialog = new DataPointDialog(this, connectorManager);
+		dataPointDialog.show();
+	}
 
-    /**
-     * Initializes the connector event listener.
-     */
-    private void initializeEventListener() {
-        eventListener = new ICloudConnectorEventListener() {
-            @Override
-            public void connected() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        connectSwitch.setOnCheckedChangeListener(null);
-                        connectSwitch.setEnabled(true);
-                        connectSwitch.setChecked(true);
-                        connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
-                        statusText.setText(getResources().getString(R.string.status_connected));
-                        statusText.setTextColor(getResources().getColor(R.color.green));
-                        datapointsButton.setEnabled(true);
-                    }
-                });
-            }
+	/**
+	 * Initializes the connector event listener.
+	 */
+	private void initializeEventListener() {
+		eventListener = new ICloudConnectorEventListener() {
+			@Override
+			public void connected() {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						connectSwitch.setOnCheckedChangeListener(null);
+						connectSwitch.setEnabled(true);
+						connectSwitch.setChecked(true);
+						connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
+						statusText.setText(getResources().getString(R.string.status_connected));
+						statusText.setTextColor(getResources().getColor(R.color.green));
+						datapointsButton.setEnabled(true);
+					}
+				});
+			}
 
-            @Override
-            public void disconnected() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        connectSwitch.setOnCheckedChangeListener(null);
-                        connectSwitch.setEnabled(true);
-                        connectSwitch.setChecked(false);
-                        connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
-                        statusText.setText(getResources().getString(R.string.status_disconnected));
-                        statusText.setTextColor(getResources().getColor(R.color.red));
-                        datapointsButton.setEnabled(false);
-                    }
-                });
-            }
+			@Override
+			public void disconnected() {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						connectSwitch.setOnCheckedChangeListener(null);
+						connectSwitch.setEnabled(true);
+						connectSwitch.setChecked(false);
+						connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
+						statusText.setText(getResources().getString(R.string.status_disconnected));
+						statusText.setTextColor(getResources().getColor(R.color.red));
+						datapointsButton.setEnabled(false);
+					}
+				});
+			}
 
-            @Override
-            public void connectionError(final String s) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        connectSwitch.setOnCheckedChangeListener(null);
-                        connectSwitch.setEnabled(true);
-                        connectSwitch.setChecked(false);
-                        connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
-                        statusText.setText(getResources().getString(R.string.status_disconnected));
-                        statusText.setTextColor(getResources().getColor(R.color.red));
-                        datapointsButton.setEnabled(false);
-                        Toast.makeText(CloudConnectorSampleActivity.this, s, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+			@Override
+			public void connectionError(final String s) {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						connectSwitch.setOnCheckedChangeListener(null);
+						connectSwitch.setEnabled(true);
+						connectSwitch.setChecked(false);
+						connectSwitch.setOnCheckedChangeListener(connectCheckedListener);
+						statusText.setText(getResources().getString(R.string.status_disconnected));
+						statusText.setTextColor(getResources().getColor(R.color.red));
+						datapointsButton.setEnabled(false);
+						Toast.makeText(CloudConnectorSampleActivity.this, s, Toast.LENGTH_LONG).show();
+					}
+				});
+			}
 
-            @Override
-            public void sendDataPointsSuccess() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(CloudConnectorSampleActivity.this, DATAPOINTS_SEND_SUCCESS, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
+			@Override
+			public void sendDataPointsSuccess() {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(CloudConnectorSampleActivity.this, DATAPOINTS_SEND_SUCCESS, Toast.LENGTH_LONG).show();
+					}
+				});
+			}
 
-            @Override
-            public void sendDataPointsError(final String errorMessage) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(CloudConnectorSampleActivity.this, errorMessage, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        };
-    }
+			@Override
+			public void sendDataPointsError(final String errorMessage) {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(CloudConnectorSampleActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+					}
+				});
+			}
+		};
+	}
 
-    /**
-     * Initializes the device request listener.
-     */
-    private void initializeDeviceRequestListener() {
-        deviceRequestListener = new IDeviceRequestListener() {
-            @Override
-            public String handleDeviceRequest(String s, byte[] bytes) {
-                Toast.makeText(CloudConnectorSampleActivity.this, "Device Request for target " + s + " - Data: " + new String(bytes), Toast.LENGTH_LONG).show();
-                return "Success";
-            }
+	/**
+	 * Initializes the device request listener.
+	 */
+	private void initializeDeviceRequestListener() {
+		deviceRequestListener = new IDeviceRequestListener() {
+			@Override
+			public String handleDeviceRequest(String s, byte[] bytes) {
+				Toast.makeText(CloudConnectorSampleActivity.this, "Device Request for target " + s + " - Data: " + new String(bytes), Toast.LENGTH_LONG).show();
+				return "Success";
+			}
 
-            @Override
-            public String handleDeviceRequest(String s, String s1) {
-                Toast.makeText(CloudConnectorSampleActivity.this, "Device Request for target " + s + " - Data: " + s1, Toast.LENGTH_LONG).show();
-                return "Success";
-            }
-        };
-    }
+			@Override
+			public String handleDeviceRequest(String s, String s1) {
+				Toast.makeText(CloudConnectorSampleActivity.this, "Device Request for target " + s + " - Data: " + s1, Toast.LENGTH_LONG).show();
+				return "Success";
+			}
+		};
+	}
 
-    private final CompoundButton.OnCheckedChangeListener connectCheckedListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            handleConnectPressed(isChecked);
-        }
-    };
+	private final CompoundButton.OnCheckedChangeListener connectCheckedListener = new CompoundButton.OnCheckedChangeListener() {
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			handleConnectPressed(isChecked);
+		}
+	};
 }
